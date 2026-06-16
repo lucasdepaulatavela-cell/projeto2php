@@ -8,14 +8,13 @@
         protected int $mana;
         public function __construct(
         string $name,
-        int $maxLife,
         int $life,
         int $attack,
         int $defense,
         int $mana
     ){
         $this->name = $name;
-        $this->maxLife = $maxLife;
+        $this->maxLife = $life;
         $this->life = $life;
         $this->attack = $attack;
         $this->defense = $defense;

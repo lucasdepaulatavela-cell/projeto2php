@@ -20,7 +20,8 @@ echo "2 - Templario" . "\n";
 echo "3 - Alquimista" . "\n";
 echo "------------------" . "\n";
 
-$op1 = readline("Jogador 1, escolha sua classe: ");
+$op1 = readline("Jogador 1: ");
+echo "------------------" . "\n";
 
 $player1 = match ($op1) {
     "1" => new Druid(),
@@ -28,9 +29,7 @@ $player1 = match ($op1) {
     "3" => new Alchemist(),
     default => null
     };
-echo "Jogador 1 escolheu " . $player1->getName() . "\n";
-
-$op2 = readline("Jogador 2, escolha sua classe: ");
+$op2 = readline("Jogador 2: ");
 
 $player2 = match ($op2) {
     "1" => new Druid(),
@@ -38,7 +37,21 @@ $player2 = match ($op2) {
     "3" => new Alchemist(),
     default => null
     };
-echo "Jogador 2 escolheu " . $player2->getName() . "\n";
-$whileR = false;
+if(strtolower(readline("Quer iniciar o jogo? S/N ")) === "s"){
+    $whileR = false;
+}
+else{
+    exit;
+}
+system('clear');
+echo "Jogador 1: " . $player1->getName() . "\n";
+echo "Vida: " . $player1->getLife() . "\n";
+echo "Defesa: " . $player1->getDefense() . "\n";
+echo "Mana: " . $player1->getMana() . "\n";
+echo "------------------" . "\n";
+echo "Jogador 2: " . $player2->getName() . "\n";
+echo "Vida: " . $player2->getLife() . "\n";
+echo "Defesa: " . $player2->getDefense() . "\n";
+echo "Mana: " . $player2->getMana() . "\n";
 }
 ?>
