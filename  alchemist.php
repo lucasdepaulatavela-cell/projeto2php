@@ -1,14 +1,14 @@
 <?php
-   class Druid extends Character{
-    public const LIFE = 84;
-    public const ATTACK = 21;
-    public const DEFENSE = 10;
-    public const MANA = 105;
+ class Alchemist extends Character{
+    public const LIFE = 70;
+    public const ATTACK = 7;
+    public const DEFENSE = 7;
+    public const MANA = 140;
 
     public function __construct()
     {
         parent::__construct(
-            "Druida",
+            "Alquimista",
             self::LIFE,
             self::ATTACK,
             self::DEFENSE,
@@ -18,7 +18,7 @@
 
     public function special(): int
     {
-        return 0;
+        return 30;
     }
 }
 
