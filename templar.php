@@ -1,13 +1,11 @@
 <?php
-
 class Templar extends Character {
     public const LIFE = 112;
     public const ATTACK = 28;
     public const DEFENSE = 14;
     public const MANA = 70;
 
-    public function __construct()
-    {
+    public function __construct(){
         parent::__construct(
             "Templario",
             self::LIFE,
@@ -17,10 +15,12 @@ class Templar extends Character {
         );
     }
 
-    public function special(): int
-    {
-        return 28;
+    public function special1(): void {
+        echo "O poder divino lhe ajuda." ."\n";
+        $this->spendMana(49);
+        $this->increaseAttack(7);
     }
 }
+
 
 ?>

@@ -16,9 +16,10 @@
         );
     }
 
-    public function special(): int
-    {
-        return 0;
+    public function special1(): void {
+        echo "Você se cura com a ajuda da natureza." . "\n";
+       $this->spendMana(49);
+       $this->heal(35);
     }
 }
 
