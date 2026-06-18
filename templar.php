@@ -1,11 +1,11 @@
 <?php
 class Templar extends Character {
     public const LIFE = 112;
-    public const ATTACK = 28;
-    public const DEFENSE = 14;
+    public const ATTACK = 21;
+    public const DEFENSE = 12;
     public const MANA = 70;
 
-    public function __construct(){
+    public function __construct() {
         parent::__construct(
             "Templario",
             self::LIFE,
@@ -15,11 +15,15 @@ class Templar extends Character {
         );
     }
 
-    public function special1(): void {
-        echo "O poder divino lhe ajuda." ."\n";
-        $this->spendMana(49);
-        $this->increaseAttack(7);
-    }
+    public function special1(Character $target): void {
+        try {
+        $this->spendMana(70);
+        $target->takeDamage(35);
+        } catch(Exception $e) {
+            echo $e->getMessage() ."\n";
+        }
+        echo "Um raio divino cai sobre o inimigo causando 35 pontos de dano." ."\n";
+        }
 }
 
 

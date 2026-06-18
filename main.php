@@ -10,6 +10,7 @@ $player1 = 0;
 $player2 = 0;
 $dado = 0;
 $whileR = true;
+$damage = 0;
 
 while ($whileR){
 
@@ -47,6 +48,8 @@ else{
 $whileR = true;
 while($whileR){
     system('clear');
+    $player1->processBurn();
+    $player2->processBurn();
     echo "Jogador 1: " . $player1->getName() . "\n";
     echo "Vida: " . $player1->getLife() . "\n";
     echo "Defesa: " . $player1->getDefense() . "\n";
@@ -67,16 +70,26 @@ while($whileR){
     switch($op1){
         case "1": 
         $dado = rand(1, 20);
-        echo "Rolagem " . $dado . "\n";
+        echo "Rolagem " . $dado . "\n"; 
         if($dado >= $player2->getDefense()){
             echo "Você acertou o ataque com maestria!". "\n;";
-            $player2->takeDamage($player1->getAttack());
+            $damage = $player1->getAttack();
+            if($player2->isDefending() == true){
+                $damage -= 14;
+                $player2->stopDefending();
+            }
+            $damage = max(0, $damage);
+            $player2->takeDamage($damage);
+            echo "Você causou ". $damage . " de dano!\n";
+            echo "\n";
         }
         else{
             echo "O oponente foi mais rapido e infelizmente escapou do seu ataque." . "\n";
         }
+
         if($player2->getLife() <= 0){
             echo "\n";
+            system('clear');
             echo "VITORIA PARA O JOGADOR 1". "\n";
             $whileR = false;
         }
@@ -85,17 +98,21 @@ while($whileR){
         case "2":
         $player1->defend();
         echo "Jogador 1 escolheu entrar na defensiva.". "\n";
+
         if($player2->getLife() <= 0){
             echo "\n";
+            system('clear');
             echo "VITORIA PARA O JOGADOR 1". "\n";
             $whileR = false;
         }
         break;
 
         case "3":
-        $player1->special1();
+        $player1->special1($player2);
+
         if($player2->getLife() <= 0){
             echo "\n";
+            system('clear');
             echo "VITORIA PARA O JOGADOR 1". "\n";
             $whileR = false;
         }
@@ -114,39 +131,53 @@ while($whileR){
         echo "Rolagem " . $dado . "\n";
         if($dado >= $player1->getDefense()){
             echo "Você acertou o ataque com maestria!". "\n;";
+            $damage = $player2->getAttack();
+            if($player1->isDefending() == true){
+                $damage -= 14;
+                $player1->stopDefending();
+            }
             echo "\n";
-            $player1->takeDamage($player2->getAttack());
+            $damage = max(0, $damage);
+            $player1->takeDamage($damage);
+            echo "Você causou ". $damage ." de dano!\n";
         }
         else{
             echo "O oponente foi mais rapido e infelizmente escapou do seu ataque." . "\n";
             echo "\n";
         }
+
         if($player1->getLife() <= 0){
             echo "\n";
+            system('clear');
             echo "VITORIA PARA O JOGADOR 2". "\n";
             $whileR = false;
         }
         break;
 
         case "2":
-        $player1->defend();
-        echo "Jogador 1 escolheu entrar na defensiva.". "\n";
+        $player2->defend();
+        echo "Jogador 2 escolheu entrar na defensiva.". "\n";
+
         if($player1->getLife() <= 0){
             echo "\n";
+            system('clear');
             echo "VITORIA PARA O JOGADOR 2". "\n";
             $whileR = false;
         }
         break;
 
         case "3":
-        $player2->special1();
+        $player2->special1($player1);
         if($player1->getLife() <= 0){
             echo "\n";
+            system('clear');
             echo "VITORIA PARA O JOGADOR 2". "\n";
             $whileR = false;
         }
         break;
     }
+    $player1->increaseMana(14);
+    $player2->increaseMana(14);
     readline("Pressione enter para continuar");
 }
 }

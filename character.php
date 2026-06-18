@@ -6,7 +6,9 @@
         protected int $attack;
         protected int $defense;
         protected int $mana;
+        protected int $maxMana;
         protected bool $defending = false;
+        protected int $burnTurns = 0;
 
         public function __construct(
         string $name,
@@ -14,7 +16,6 @@
         int $attack,
         int $defense,
         int $mana,
-        bool $defending
     ){
         $this->name = $name;
         $this->maxLife = $life;
@@ -22,9 +23,9 @@
         $this->attack = $attack;
         $this->defense = $defense;
         $this->mana = $mana;
-        $this->defending = $defending;
+        $this->maxMana = $mana;
     }
-        abstract public function special1(): void;
+        abstract public function special1(Character $target): void;
 
         public function getName(): string {
             return $this->name;
@@ -52,21 +53,14 @@
             $this->life += $healer;
             }
             }
-        public function increaseDefense(int $increase): void {
-            $this->defense += $increase;
-        }
         public function increaseAttack(int $amount): void {
             $this->attack += $amount;
         }
-        public function spendMana(int $cost): bool {
-            if(($this->mana - $cost) < 0) {
-            echo "Você falhou em usar a habilidade!" . "\n";
-            return false;
+        public function spendMana(int $cost): void {
+             if ($this->mana < $cost) {
+                throw new Exception("Mana insuficiente!");
             }
-            else {
-                $this->mana -= $cost;
-                return true;
-            }
+             $this->mana -= $cost;
         }
         public function defend(): void {
             $this->defending = true;
@@ -77,5 +71,24 @@
         public function stopDefending(): void {
             $this->defending = false;
         }
+
+        public function increaseMana(int $increase): void {
+            if(($this->mana + $increase) > $this->maxMana) {
+            $this->mana = $this->maxMana;
+        }
+        else {
+            $this->mana += $increase;
+        }
+        }
+        public function applyBurn(int $turns): void {
+            $this->burnTurns = $turns; 
+        }
+        public function processBurn(): void {
+            if ($this->burnTurns > 0) {
+            echo $this->name . " sofre 7 de dano de queimadura!\n";
+            $this->takeDamage(7);
+            $this->burnTurns--;
+            }
+}
 }   
 ?>
